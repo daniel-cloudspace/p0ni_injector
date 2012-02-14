@@ -44,12 +44,13 @@ function f00l_em() {
      * Event handers for client->server messages!
      **/
     function handleKeyEvent(type, e) {
-      if (!_.include(used_keycodes, e.keyCode)) return; // return early if we're not using this keycode
+/*      if (!_.include(used_keycodes, e.keyCode)) return; // return early if we're not using this keycode
       
             e.preventDefault() // disable the default keystroke, like up/down moving the page
             socket.emit('keystroke', { // send the keycode 
               keyCode: e.keyCode, pressed: (type == 'keydown') // set to keyup as default
             })
+*/
     }
     document.addEventListener('keydown', function(e) { handleKeyEvent('keydown', e) }, false)
     document.addEventListener('keyup',   function(e) { handleKeyEvent('keyup', e)   }, false)
@@ -69,19 +70,11 @@ function f00l_em() {
     })
   
   
-    var myOptions = {
-      center: new google.maps.LatLng(28.703052,-81.338401),
-      zoom: 13,
-      mapTypeId: google.maps.MapTypeId.HYBRID
-    }
-    var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions)
   })
 }
 
 
-
-
-(function)() {
+(function() {
   var host = ''
   if (document.location.host.substring('127.0.0.1') == -1) host = "http://ec2-174-129-191-139.compute-1.amazonaws.com:8001"
   
@@ -106,12 +99,12 @@ function f00l_em() {
     scriptTag.src = includes[i]
   
     scriptTag.onload = registerLoadedFile
-    scriptTag..onreadystatechange = function() {
+    scriptTag.onreadystatechange = function() {
       if (this.readyState == 'complete') registerLoadedFile();
     }
-  
-    document.head.appendChild(script_tag) 
+
+    document.head.appendChild(scriptTag) 
   }
-}
+})()
 
 
