@@ -6,6 +6,7 @@ if (document.location.host.substring('127.0.0.1') == -1) host = "http://ec2-174-
 var includes = [ 
   'http://j.maxmind.com/app/geoip.js', 
   'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
+  'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.1/underscore-min.js',
   host + '/socket.io/socket.io.js'
 ]
 for (var i=0; i<includes.length; i++) {
