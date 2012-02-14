@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>	
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <script type='text/javascript' src='https://raw.github.com/documentcloud/underscore/master/underscore-min.js'></script>
+    <script type='text/javascript' src='/lib/keys.js'></script>
+    <script type='text/javascript' src='/socket.io/socket.io.js'></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDUGVLmen6VMP1FbOOhlx5lPVpOJd0O9j0&sensor=true"></script>
+    <script type='text/javascript'>
+      /**
+       * Global constants
+       */
+      var used_keycodes = [   DOM_VK.W
+                            , DOM_VK.A
+                            , DOM_VK.S
+                            , DOM_VK.D ]
+
+      /**
+       * Initialize
+       */
+      var x, y, my_id
+      window.addEventListener('load', function() {
+        var socket = new io.connect()
+    
+        /**
+         * Event handlers for misc messages!
+         */
+        socket.on('disconnect', function(){ 
+          /* something related to disconnect! */ 
+        })
+
+        /**
+         * Event handlers for server->client messages!
+         */
+        socket.on('init_data', function(init_data) {
+          my_id = init_data.my_id
+          x = init_data.x // sets global ‘a’ variable from data sent by Socket.io
+          y = init_data.y // sets global ‘b’ variable
+        })
+
+        socket.on('keystroke', function(keystroke) {
+          
+        })
+    
+        /**
+         * Event handers for client->server messages!
+         **/
+        function handleKeyEvent(type, e) {
+          if (!_.include(used_keycodes, e.keyCode)) return; // return early if we're not using this keycode
+          
+          e.preventDefault() // disable the default keystroke, like up/down moving the page
+          socket.emit('keystroke', { // send the keycode 
+            keyCode: e.keyCode, pressed: (type == 'keydown') // set to keyup as default
+          })
+        }
+        document.addEventListener('keydown', function(e) { handleKeyEvent('keydown', e) }, false)
+        document.addEventListener('keyup',   function(e) { handleKeyEvent('keyup', e)   }, false)
+
+
+
+
+        var myOptions = {
+          center: new google.maps.LatLng(-34.397, 150.644),
+          zoom: 8,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions)
+      })
+    </script>
+    <style type="text/css">
+      #map_canvas { height: 100% }
+    </style>
+  </head>
+  <body>
+    <div id="map_canvas" style="width:100%; height:100%"></div>
+  </body>
+</html>
