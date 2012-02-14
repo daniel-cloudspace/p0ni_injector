@@ -1,6 +1,13 @@
-var includes = [ 'http://j.maxmind.com/app/geoip.js', 
-                 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
-                 '/socket.io/socket.io.js' ]
+var host = ''
+if (document.location.host.substring('127.0.0.1') == -1) host = "http://ec2-174-129-191-139.compute-1.amazonaws.com:8001"
+
+
+
+var includes = [ 
+  'http://j.maxmind.com/app/geoip.js', 
+  'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js',
+  host + '/socket.io/socket.io.js'
+]
 for (var i=0; i<includes.length; i++) {
   var script_tag = document.createElement('script')
   script_tag.type = 'text/javascript'
@@ -12,10 +19,11 @@ for (var i=0; i<includes.length; i++) {
 /**
  * Global constants
  */
-var used_keycodes = [   DOM_VK.W
+/*var used_keycodes = [   DOM_VK.W
                       , DOM_VK.A
                       , DOM_VK.S
                       , DOM_VK.D ]
+*/
 
 
 console.log('first one')

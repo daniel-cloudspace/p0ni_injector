@@ -1,3 +1,6 @@
+var env = process.env ? process.env : 'development'
+
+
 var express = require('express')
   , socketio = require('socket.io')
   , eyes = require('eyes')
