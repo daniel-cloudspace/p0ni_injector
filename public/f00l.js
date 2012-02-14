@@ -1,3 +1,7 @@
+var env = (document.location.host.indexOf('127.0.0.1') == -1) ? 'production' : 'devevelopment'
+
+var host = (env == 'production') ? "http://ec2-174-129-191-139.compute-1.amazonaws.com:8001" : ''
+
 function f00l_em() {  
   /**
    * Global constants
@@ -9,16 +13,19 @@ function f00l_em() {
   */
   
   
-  console.log('first one')
-  
   /**
    * Initialize
    */
   var x, y, my_id
   var f00ls;
   window.addEventListener('load', function() {
-    console.log('second one')
-    var socket = new io.connect()
+    var socket 
+
+    if (env == 'production') {
+      socket = new io.connect('http://ec2-174-129-191-139.compute-1.amazonaws.com:8001')
+    } else {
+      socket = new io.connect()
+    }
       
     /**
      * Event handlers for misc messages!
@@ -75,8 +82,6 @@ function f00l_em() {
 
 
 (function() {
-  var host = ''
-  if (document.location.host.substring('127.0.0.1') == -1) host = "http://ec2-174-129-191-139.compute-1.amazonaws.com:8001"
   
   var includes = [ 
     'http://j.maxmind.com/app/geoip.js', 
