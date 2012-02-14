@@ -15,7 +15,7 @@ app.listen(8001)
 var io = socketio.listen(app)
 
 var f00ls = {};
-var admin;
+var admins = {};
 
 function create_user(loc) {
   var user_data = {
@@ -53,11 +53,12 @@ io.sockets.on('connection', function(socket) {
       socket.broadcast.emit('keystroke', keystroke) // broadcast keystrokes
     })
   
-    socket.on('send_location', function(loc) {
-    })
-  
+
     socket.on('disconnect', function(){
       delete f00ls[socket.id] // remove the user from the list
+      _.each(admins, function(admin) {
+        admins.emit('remove_f00l', socket.id)
+      })
     })
 
 
@@ -65,18 +66,21 @@ io.sockets.on('connection', function(socket) {
      *  Send Data To Admin
      */
 
-    admin.emit('add_f00l', me)
+    _.each(admins, function(admin){
+      admin.emit('add_f00l', me)
+    })
   })
 
   socket.on('set_familabber', function(familabber) {
-    admin = socket
+    admins[socket.id] = socket
 
     socket.emit('init_data', {
       f00ls: f00ls
     })
+    console.log(eyes.inspect(f00ls))
 
     socket.on('disconnect', function() {
-      admin = undefined
+      delete admins[socket.id]
     })
   })
 })
