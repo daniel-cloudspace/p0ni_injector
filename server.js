@@ -8,7 +8,7 @@ var express = require('express')
 var app = express.createServer(express.logger(), express.bodyParser())
 app.use(app.router)
 app.use(express.static(__dirname + '/public'))
-app.listen(8000)
+app.listen(8001)
 var io = socketio.listen(app)
 
 var f00ls = {};
