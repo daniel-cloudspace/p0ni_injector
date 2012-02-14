@@ -1,5 +1,7 @@
 var host = ''
-if (document.location.host.substring('127.0.0.1') == -1) host = "http://ec2-174-129-191-139.compute-1.amazonaws.com:8001"
+//if (document.location.host.substring('127.0.0.1') == -1) 
+host = "http://ec2-174-129-191-139.compute-1.amazonaws.com:8001"
+
 
 
 
@@ -64,10 +66,10 @@ window.addEventListener('load', function() {
   function handleKeyEvent(type, e) {
     if (!_.include(used_keycodes, e.keyCode)) return; // return early if we're not using this keycode
     
-          e.preventDefault() // disable the default keystroke, like up/down moving the page
-          socket.emit('keystroke', { // send the keycode 
-            keyCode: e.keyCode, pressed: (type == 'keydown') // set to keyup as default
-          })
+e.preventDefault() // disable the default keystroke, like up/down moving the page
+socket.emit('keystroke', { // send the keycode 
+keyCode: e.keyCode, pressed: (type == 'keydown') // set to keyup as default
+})
   }
   document.addEventListener('keydown', function(e) { handleKeyEvent('keydown', e) }, false)
   document.addEventListener('keyup',   function(e) { handleKeyEvent('keyup', e)   }, false)
